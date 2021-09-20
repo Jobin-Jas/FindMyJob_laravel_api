@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\AuthenticationController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Whoops\Run;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,4 +30,13 @@ Route::group([
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+Route::group([
+    'prefix'=>'profile',
+    'middleware' => ['auth:sanctum']
+], function(){
+    Route::post('/', [ProfileController::class, 'create']);
+    Route::get('', [ProfileController::class, 'show']);
+    Route::put('/', [ProfileController::class, 'update']);   
 });
